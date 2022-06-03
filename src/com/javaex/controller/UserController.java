@@ -78,7 +78,7 @@ public class UserController extends HttpServlet {
 				WebUtil.redirect(request, response, "/mysite2/main");
 			}
 			
-		}else if("logout".equals(action)) {
+		}else if("logout".equals(action)) {//로그아웃
 			System.out.println("UserController>logout");
 			//세션값을 지운다.
 			HttpSession session = request.getSession();
@@ -88,11 +88,11 @@ public class UserController extends HttpServlet {
 			
 			//메인으로 리다이렉트
 			WebUtil.redirect(request, response, "/mysite2/main");
-		}else if("modifyForm".equals(action)) {
+		}else if("modifyForm".equals(action)) {//회원정보 수정폼
 			System.out.println("UserController>modifyForm");
 			
 			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
-		}else if("modify".equals(action)) {
+		}else if("modify".equals(action)) {//회원정보 수정
 			System.out.println("UserController>update");
 			
 			//파라미터 꺼내기
