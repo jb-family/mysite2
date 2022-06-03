@@ -126,7 +126,7 @@ public class UserDao {
 		
 		public UserVo getUser(int no) {
 			getConnecting();
-			UserVo authUser = null;
+			UserVo userVo = null;
 			try {
 			
 			// 3. SQL문준비/ 바인딩/ 실행
@@ -150,35 +150,21 @@ public class UserDao {
 			
 			// 4.결과처리
 			while(rs.next()) {
-				no = rs.getInt("no");
+				int userNo = rs.getInt("no");
 				String id = rs.getString("id");
 				String name = rs.getString("name");
 				String password = rs.getString("password");
 				String gender = rs.getString("gender");
 				
-				authUser = new UserVo();
-				authUser.setNo(no);
-				authUser.setId(id);
-				authUser.setName(name);
-				authUser.setPassword(password);
-				authUser.setGender(gender);
+				userVo = new UserVo(userNo, id, password, name, gender);
+				
 			}
 			} catch (SQLException e) {
 			System.out.println("error:" + e);
 			}
 			close();
-			return authUser;
+			return userVo;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		public int update(UserVo userVo) {
 			int count = -1;
@@ -191,7 +177,7 @@ public class UserDao {
 				query += " set name = ? ";
 				query += "     ,password = ? ";
 				query += "     ,gender = ? ";
-				query += " where id = ? ";
+				query += " where no = ? ";
 				
 
 				// 바인딩
@@ -199,7 +185,7 @@ public class UserDao {
 				pstmt.setString(1, userVo.getName());
 				pstmt.setString(2, userVo.getPassword());
 				pstmt.setString(3, userVo.getGender());
-				pstmt.setString(4, userVo.getId());
+				pstmt.setInt(4, userVo.getNo());
 
 				// 실행
 				count = pstmt.executeUpdate();
