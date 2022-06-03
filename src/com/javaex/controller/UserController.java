@@ -47,6 +47,7 @@ public class UserController extends HttpServlet {
 			WebUtil.forward(request, response, "/WEB-INF/views/user/joinOk.jsp");
 		}else if("loginForm".equals(action)) {//로그인 폼
 			System.out.println("UserController>loginForm");
+			
 			WebUtil.forward(request, response, "/WEB-INF/views/user/loginForm.jsp");
 			
 		}else if("login".equals(action)) {//로그인
@@ -68,6 +69,7 @@ public class UserController extends HttpServlet {
 			
 			if(authUser == null) {
 				System.out.println("로그인실패");
+				WebUtil.redirect(request, response, "/mysite2/main");
 			}else {
 				System.out.println("로그인성공");
 				HttpSession session = request.getSession();
@@ -83,7 +85,40 @@ public class UserController extends HttpServlet {
 			session.removeAttribute("authUser");
 			session.invalidate();
 			
+			
 			//메인으로 리다이렉트
+			WebUtil.redirect(request, response, "/mysite2/main");
+		}else if("modifyForm".equals(action)) {
+			System.out.println("UserController>modifyForm");
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
+		}else if("modify".equals(action)) {
+			System.out.println("UserController>update");
+			
+			//파라미터 꺼내기
+			int no = Integer.parseInt(request.getParameter("no"));
+			String id = request.getParameter("id");
+			String password = request.getParameter("password");
+			String name = request.getParameter("name");
+			String gender = request.getParameter("gender");
+			
+			//Vo만들기
+			UserVo userVo = new UserVo();
+			userVo.setNo(no);
+			userVo.setId(id);
+			userVo.setPassword(password);
+			userVo.setName(name);
+			userVo.setGender(gender);
+			
+			
+			//Dao만들기
+			UserDao userDao = new UserDao();
+			userDao.update(userVo);
+			
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("authUser", userVo);
+			
 			WebUtil.redirect(request, response, "/mysite2/main");
 		}
 		
