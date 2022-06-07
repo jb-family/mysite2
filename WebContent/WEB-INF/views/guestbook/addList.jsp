@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.GuestVo" %>
-<%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%
 
-	
-	
-	List<GuestVo> gList = (List<GuestVo>)request.getAttribute("gList");
-	
-%>
 
 <!DOCTYPE html>
 <html>
@@ -26,8 +19,7 @@
 
 		<!-- header -->
 		
-			<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
-			
+			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		
 		<!-- //header -->
 
@@ -93,8 +85,7 @@
 						<!-- //guestWrite -->
 						<input type="hidden" name="action" value="add">
 					</form>	
-					
-					<%for(int i = 0; i < gList.size(); i++) { %>
+					<c:forEach items="${gList}" var="guestVo" varStatus="status">
 						<table class="guestRead">
 							<colgroup>
 									<col style="width: 10%;">
@@ -103,17 +94,18 @@
 									<col style="width: 10%;">
 							</colgroup>
 							<tr>
-								<td><%= gList.get(i).getNo() %></td>
-								<td><%= gList.get(i).getName() %></td>
-								<td><%= gList.get(i).getRegDate() %></td>
-								<td><a href="/mysite2/guest?action=deleteForm&no=<%=gList.get(i).getNo() %>">[삭제]</a></td>
+								<td>${guestVo.no}</td>
+								<td>${guestVo.name}</td>
+								<td>${guestVo.regDate}</td>
+								<td><a href="/mysite2/guest?action=deleteForm&no=${guestVo.no}">[삭제]</a></td>
 							</tr>
 							<tr>
-								<td colspan=4 class="text-left"><%= gList.get(i).getContent() %></td>
+								<td colspan=4 class="text-left">${guestVo.content}</td>
 							</tr>
-						</table>	
+						</table>							
+					</c:forEach>
+						
 					
-					<% } %>
 					<!-- //guestRead -->
 					
 				</div>
@@ -125,7 +117,7 @@
 		<!-- //container  -->
 
 		<!-- footer -->
-			<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
