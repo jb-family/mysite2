@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.UserVo" %>
+<%@ page import="com.javaex.vo.GuestVo" %>
+<%@ page import="java.util.List" %>
+
 <%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
-	System.out.println(authUser);
+
+	
+	
+	List<GuestVo> gList = (List<GuestVo>)request.getAttribute("gList");
 	
 %>
 
@@ -20,27 +24,11 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="/mysite2/main">MySite</a>
-			</h1>
-
-			<%if(authUser == null) {%> <!-- 로그인 실패, 로그인 전 -->
-				<!-- 로그인 실패, 로그인 전 -->
-				<ul>
-					<li><a href="/mysite2/user?action=loginForm" class="btn_s">로그인</a></li>
-					<li><a href="/mysite2/user?action=joinForm" class="btn_s">회원가입</a></li>
-				</ul>
-			<% }else { %>
-				<!-- 로그인 성공 -->
-				<ul>
-					<li><%=authUser.getName() %>님 안녕하세요^^</li>
-					<li><a href="/mysite2/user?action=logout" class="btn_s">로그아웃</a></li>
-					<li><a href="/mysite2/user?action=modifyForm&no=<%=authUser.getNo() %>" class="btn_s">회원정보수정</a></li>
-				</ul>
-			<% } %>
+		<!-- header -->
+		
+			<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
 			
-		</div>
+		
 		<!-- //header -->
 
 		<div id="nav">
@@ -48,7 +36,7 @@
 				<li><a href="">입사지원서</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="/mysite2/user?action=addList">방명록</a></li>
+				<li><a href="/mysite2/guest?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -78,9 +66,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form action="user" method="get">
-					<input type="text" name="action" value="add">
-					
+					<form action="guest" method="get">
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -106,45 +92,28 @@
 						</table>
 						<!-- //guestWrite -->
 						<input type="hidden" name="action" value="add">
-						
 					</form>	
 					
-					<table class="guestRead">
-						<colgroup>
-							<col style="width: 10%;">
-							<col style="width: 40%;">
-							<col style="width: 40%;">
-							<col style="width: 10%;">
-						</colgroup>
-						<tr>
-							<td>1234555</td>
-							<td>이정재</td>
-							<td>2020-03-03 12:12:12</td>
-							<td><a href="/mysite2/user?action=deleteForm">[삭제]</a></td>
-						</tr>
-						<tr>
-							<td colspan=4 class="text-left">방명록 글입니다. 방명록 글입니다.</td>
-						</tr>
-					</table>
-					<!-- //guestRead -->
+					<%for(int i = 0; i < gList.size(); i++) { %>
+						<table class="guestRead">
+							<colgroup>
+									<col style="width: 10%;">
+									<col style="width: 40%;">
+									<col style="width: 40%;">
+									<col style="width: 10%;">
+							</colgroup>
+							<tr>
+								<td><%= gList.get(i).getNo() %></td>
+								<td><%= gList.get(i).getName() %></td>
+								<td><%= gList.get(i).getRegDate() %></td>
+								<td><a href="/mysite2/guest?action=deleteForm&no=<%=gList.get(i).getNo() %>">[삭제]</a></td>
+							</tr>
+							<tr>
+								<td colspan=4 class="text-left"><%= gList.get(i).getContent() %></td>
+							</tr>
+						</table>	
 					
-					<table class="guestRead">
-						<colgroup>
-								<col style="width: 10%;">
-								<col style="width: 40%;">
-								<col style="width: 40%;">
-								<col style="width: 10%;">
-						</colgroup>
-						<tr>
-							<td>1234555</td>
-							<td>이정재</td>
-							<td>2020-03-03 12:12:12</td>
-							<td><a href="/mysite2/user?action=deleteForm">[삭제]</a></td>
-						</tr>
-						<tr>
-							<td colspan=4 class="text-left">방명록 글입니다. 방명록 글입니다.</td>
-						</tr>
-					</table>	
+					<% } %>
 					<!-- //guestRead -->
 					
 				</div>
@@ -155,9 +124,8 @@
 		</div>
 		<!-- //container  -->
 
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
+		<!-- footer -->
+			<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->

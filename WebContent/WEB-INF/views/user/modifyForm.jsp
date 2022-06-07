@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.UserVo" %>
+<%@ page import= "com.javaex.vo.UserVo" %>
 <%
 	UserVo userVo = (UserVo)request.getAttribute("userVo");
-%> 
-
+%>
 
 <!DOCTYPE html>
 <html>
@@ -18,24 +17,11 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="/mysite2/main">MySite</a>
-			</h1>
-
-			<!-- 
-			<ul>
-				<li>황일영 님 안녕하세요^^</li>
-				<li><a href="" class="btn_s">로그아웃</a></li>
-				<li><a href="" class="btn_s">회원정보수정</a></li>
-			</ul>
-			-->	
-			<ul>
-				<li><a href="" class="btn_s">로그인</a></li>
-				<li><a href="" class="btn_s">회원가입</a></li>
-			</ul>
+		<!-- header -->
+		
+			<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
 			
-		</div>
+		
 		<!-- //header -->
 
 		<div id="nav">
@@ -43,7 +29,7 @@
 				<li><a href="">입사지원서</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="/mysite2/guest?action=addList">방명록</a></li>
 			</ul>
 		</div>
 		<!-- //nav -->
@@ -82,6 +68,7 @@
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<span class="text-large bold"><%= userVo.getId() %></span>	
+								<input type="hidden" name="id" value="<%= userVo.getId() %>">
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -139,9 +126,8 @@
 		</div>
 		<!-- //container  -->
 
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
+		<!-- footer -->
+			<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
 		<!-- //footer -->
 		
 	</div>

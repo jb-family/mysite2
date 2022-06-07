@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.UserVo" %>
 
-<%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
-	System.out.println(authUser);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -21,26 +16,24 @@
 
 		<div id="header" class="clearfix">
 			<h1>
-				<a href="/mysite2/main">MySite</a>
+				<a href="">MySite</a>
 			</h1>
 
-			<%if(authUser == null) {%> <!-- 로그인 실패, 로그인 전 -->
-				<!-- 로그인 실패, 로그인 전 -->
-				<ul>
-					<li><a href="/mysite2/user?action=loginForm" class="btn_s">로그인</a></li>
-					<li><a href="/mysite2/user?action=joinForm" class="btn_s">회원가입</a></li>
-				</ul>
-			<% }else { %>
-				<!-- 로그인 성공 -->
-				<ul>
-					<li><%=authUser.getName() %>님 안녕하세요^^</li>
-					<li><a href="/mysite2/user?action=logout" class="btn_s">로그아웃</a></li>
-					<li><a href="" class="btn_s">회원정보수정</a></li>
-				</ul>
-			<% } %>
+			<!-- 
+			<ul>
+				<li>황일영 님 안녕하세요^^</li>
+				<li><a href="" class="btn_s">로그아웃</a></li>
+				<li><a href="" class="btn_s">회원정보수정</a></li>
+			</ul>
+			-->	
+			<ul>
+				<li><a href="/mysite2/user?action=loginForm"  class="btn_s">로그인</a></li>
+				<li><a href="/mysite2/user?action=joinForm" class="btn_s">회원가입</a></li>
+			</ul>
 			
 		</div>
 		<!-- //header -->
+
 
 		<div id="nav">
 			<ul class="clearfix">
@@ -97,9 +90,8 @@
 		<!-- //container  -->
 
 
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
+		<!-- footer -->
+			<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
 		<!-- //footer -->
 
 	</div>
