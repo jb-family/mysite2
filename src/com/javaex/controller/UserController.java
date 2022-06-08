@@ -108,7 +108,7 @@ public class UserController extends HttpServlet {
 				WebUtil.forward(request, response, "/WEB-INF/views/user/loginForm.jsp");
 			}
 			
-		} else if ("modify".equals(action)) {// 회원정보 수정
+		}else if ("modify".equals(action)) {// 회원정보 수정
 			System.out.println("UserController>modify");
 
 			// 세선에서 no가져오기
@@ -148,7 +148,6 @@ public class UserController extends HttpServlet {
 				WebUtil.forward(request, response, "/WEB-INF/views/user/loginForm.jsp");
 			}
 		}
-		
 		
 	}
 
