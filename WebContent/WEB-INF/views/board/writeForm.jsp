@@ -16,9 +16,9 @@
 	<div id="wrap">
 
 		<!-- header -->
-		
-			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-		
+
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+
 		<!-- //header -->
 
 		<div id="nav">
@@ -55,28 +55,26 @@
 					<div class="clear"></div>
 				</div>
 				<!-- //content-head -->
-	
+
 				<div id="board">
 					<div id="writeForm">
 						<form action="bcr" method="get">
-							<input type = "hidden" name="action" value="write">
+							<input type="hidden" name="action" value="write">
 							<!-- 제목 -->
 							<div class="form-group">
-								<label class="form-text" for="txt-title">제목</label>
+								<label class="form-text" for="txt-title">제목</label> 
 								<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
 							</div>
-						
+
 							<!-- 내용 -->
 							<div class="form-group">
 								<textarea id="txt-content" name="content"></textarea>
 							</div>
-							
+
 							<a id="btn_cancel" href="/mysite2/bcr?action=list">취소</a>
-							<button id="btn_add" type="submit" >등록</button>
-							<input type="text" name="hit" value="0">
-							<input type="text" name="no" value="${userVo.no}">
-							
-							
+							<button id="btn_add" type="submit">등록</button>
+							<input type="hidden" name="hit" value="0"> 
+							<input type="hidden" name="no" value="${userVo.no}">
 						</form>
 						<!-- //form -->
 					</div>
@@ -85,14 +83,12 @@
 				<!-- //board -->
 			</div>
 			<!-- //content  -->
-
-
 		</div>
 		<!-- //container  -->
 
 
 		<!-- footer -->
-			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->

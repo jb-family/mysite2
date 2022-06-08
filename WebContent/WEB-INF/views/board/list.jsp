@@ -17,11 +17,11 @@
 	<div id="wrap">
 
 		<!-- header -->
-		
-			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-		
+
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+
 		<!-- //header -->
-		
+
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
@@ -56,7 +56,7 @@
 					<div class="clear"></div>
 				</div>
 				<!-- //content-head -->
-	
+
 				<div id="board">
 					<div id="list">
 						<form action="" method="">
@@ -65,7 +65,7 @@
 								<button type="submit" id=btn_search>검색</button>
 							</div>
 						</form>
-						<table >
+						<table>
 							<thead>
 								<tr>
 									<th>번호</th>
@@ -77,39 +77,24 @@
 								</tr>
 							</thead>
 							<tbody>
-							
-							<c:choose>
-							<c:when test="${authUser.name != null}">
 								<c:forEach items="${bList}" var="b" varStatus="status">
 									<tr>
 										<td>${b.no}</td>
-										<td class="text-left"><a href="/mysite2/bcr?action=read&title=${b.title}&hit=${b.hit}">${b.title}</a></td>
+										<td class="text-left">
+										<a href="/mysite2/bcr?action=read&title=${b.title}&hit=${b.hit}">${b.title}</a>
+										</td>
 										<td>${b.name}</td>
 										<td>${b.hit}</td>
 										<td>${b.regDate}</td>
-										<td><a href="/mysite2/bcr?action=delete&userNo=${b.userNo}&boardNo=${b.no}">[삭제]</a></td>
+										<c:if test="${authUser.no == b.userNo}">
+										<td><a href="/mysite2/bcr?action=delete&userNo=${b.userNo}&boardNo=${b.no}">[삭제]</a>
+										</td>
+										</c:if>
 									</tr>
 								</c:forEach>
-							</c:when>
-							<c:when test="${authUser.name == null}">
-								<c:forEach items="${bList}" var="b" varStatus="status">
-									<tr>
-										<td>${b.no}</td>
-										<td class="text-left"><a href="/mysite2/bcr?action=read&title=${b.title}&hit=${b.hit}">${b.title}</a></td>
-										<td>${b.name}</td>
-										<td>${b.hit}</td>
-										<td>${b.regDate}</td>
-										<td>-</td>
-									</tr>
-								</c:forEach>
-							</c:when>	
-						</c:choose>
-							
-							
-							
 							</tbody>
 						</table>
-			
+
 						<div id="paging">
 							<ul>
 								<li><a href="">◀</a></li>
@@ -125,13 +110,12 @@
 								<li><a href="">10</a></li>
 								<li><a href="">▶</a></li>
 							</ul>
-							
-							
+
 							<div class="clear"></div>
 						</div>
 						<c:choose>
 							<c:when test="${authUser.name != null}">
-							<a id="btn_write" href="/mysite2/bcr?action=writeForm">글쓰기</a>
+								<a id="btn_write" href="/mysite2/bcr?action=writeForm">글쓰기</a>
 							</c:when>
 						</c:choose>
 					</div>
@@ -143,10 +127,10 @@
 
 		</div>
 		<!-- //container  -->
-		
+
 
 		<!-- footer -->
-			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->

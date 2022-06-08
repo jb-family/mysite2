@@ -24,7 +24,7 @@
 		<div id="nav">
 			<ul class="clearfix">
 				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="/mysite2/bcr?action=list">게시판</a></li>
 				<li><a href="">갤러리</a></li>
 				<li><a href="/mysite2/guest?action=addList">방명록</a></li>
 			</ul>
@@ -69,7 +69,7 @@
 								<td>비밀번호</td>
 								<td><input type="password" name="password"></td>
 								<td class="text-left"><button type="submit">삭제</button></td>
-								<td><a href="/mysite2/main">[메인으로 돌아가기]</a></td>
+								<td><a href="/mysite2/guest?action=addList">[메인으로 돌아가기]</a></td>
 							</tr>
 						</table>
 						<input type='hidden' name="action" value="delete">

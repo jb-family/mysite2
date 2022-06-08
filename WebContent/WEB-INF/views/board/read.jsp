@@ -16,9 +16,9 @@
 	<div id="wrap">
 
 		<!-- header -->
-		
-			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-		
+
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+
 		<!-- //header -->
 
 		<div id="nav">
@@ -42,7 +42,6 @@
 			<!-- //aside -->
 
 			<div id="content">
-
 				<div id="content-head">
 					<h3>게시판</h3>
 					<div id="location">
@@ -55,20 +54,20 @@
 					<div class="clear"></div>
 				</div>
 				<!-- //content-head -->
-	
+
 				<div id="board">
 					<div id="read">
 						<form action="#" method="get">
 							<!-- 작성자 -->
 							<c:choose>
-								<c:when test="${authUser.name != null}">
+								<c:when test="${authUser.no == bVo.userNo}">
 									<div class="form-group">
 										<span class="form-text">작성자</span> <span class="form-value">${bVo.name}</span>
 									</div>
 
 									<!-- 조회수 -->
 									<div class="form-group">
-										<span class="form-text">조회수</span> <span class="form-value">${param.hit}</span>
+										<span class="form-text">조회수</span> <span class="form-value">${bVo.hit}</span>
 									</div>
 
 									<!-- 작성일 -->
@@ -86,7 +85,8 @@
 										<span class="form-value"> ${bVo.content} </span>
 									</div>
 
-									<a id="btn_modify" href="/mysite2/bcr?action=modifyForm">수정</a>
+									<a id="btn_modify"
+										href="/mysite2/bcr?action=modifyForm&title=${bVo.title}">수정</a>
 									<a id="btn_modify" href="/mysite2/bcr?action=list">목록</a>
 								</c:when>
 								<c:otherwise>
@@ -130,7 +130,7 @@
 		<!-- //container  -->
 
 		<!-- footer -->
-			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->

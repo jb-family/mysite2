@@ -87,10 +87,8 @@ public class BoardDao {
 
 			}
 			
-			
 			public List<BoardVo> getList() {
 				List<BoardVo> boardList = new ArrayList<BoardVo>();
-
 				getConnecting();
 				try {
 
@@ -132,9 +130,7 @@ public class BoardDao {
 						boardVo.setUserNo(userNo);
 						
 						boardList.add(boardVo);
-
 					}
-
 				} catch (SQLException e) {
 					System.out.println("error:" + e);
 				}
@@ -149,15 +145,16 @@ public class BoardDao {
 				
 				getConnecting();
 				try {
-
 					// 3. SQL문준비/ 바인딩/ 실행
 					// SQL문준비
 					String query = "";
 					query += " select  board.title ";
+					query += "         ,board.no ";
 					query += "         ,users.name ";
 					query += "         ,board.hit ";
 					query += "         ,board.reg_date ";
 					query += "         ,board.content ";
+					query += "         ,board.user_no ";
 					query += " from board, users ";
 					query += " where board.user_no = users.no ";
 					query += " and     board.title = ? ";
@@ -172,18 +169,22 @@ public class BoardDao {
 					// 4.결과처리
 					while (rs.next()) {
 						String title = rs.getString(1);
-						String name = rs.getString(2);
-						int hit = rs.getInt(3);
-						String regDate = rs.getString(4);
-						String content = rs.getString(5);
+						int no = rs.getInt(2);
+						String name = rs.getString(3);
+						int hit = rs.getInt(4);
+						String regDate = rs.getString(5);
+						String content = rs.getString(6);
+						int userNo = rs.getInt(7);
 						
 						boardVo = new BoardVo();
 						
+						boardVo.setNo(no);
 						boardVo.setTitle(title);
 						boardVo.setName(name);
 						boardVo.setHit(hit);
 						boardVo.setRegDate(regDate);
 						boardVo.setContent(content);
+						boardVo.setUserNo(userNo);
 
 					}
 
@@ -193,12 +194,7 @@ public class BoardDao {
 				close();
 				
 				return boardVo;
-				
 			}
-			
-			
-			
-			
 			
 			public int delete(BoardVo boardVo) {
 				int count = -1;
@@ -212,8 +208,6 @@ public class BoardDao {
 				query += " where user_no = ? ";
 				query += " and no = ? ";
 				
-					
-				
 				//바인딩
 				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, boardVo.getUserNo());
@@ -221,7 +215,6 @@ public class BoardDao {
 				
 				//실행	
 				count = pstmt.executeUpdate();
-				
 				
 				// 4.결과처리
 				System.out.println(count + "건이 삭제되었습니다.");
@@ -234,37 +227,23 @@ public class BoardDao {
 				return count;
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			public int update(UserVo userVo) {
+			public int update(BoardVo boardVo) {
 				int count = -1;
 				getConnecting();
 				try {
 					// 3. SQL문준비/ 바인딩/ 실행
 					// SQL문준비
 					String query = "";
-					query += " update users ";
-					query += " set name = ? ";
-					query += "     ,password = ? ";
-					query += "     ,gender = ? ";
+					query += " UPDATE board ";
+					query += " SET title = ? ";
+					query += "     ,content = ? ";
 					query += " where no = ? ";
 					
-
 					// 바인딩
 					pstmt = conn.prepareStatement(query);
-					pstmt.setString(1, userVo.getName());
-					pstmt.setString(2, userVo.getPassword());
-					pstmt.setString(3, userVo.getGender());
-					pstmt.setInt(4, userVo.getNo());
+					pstmt.setString(1, boardVo.getTitle());
+					pstmt.setString(2, boardVo.getContent());
+					pstmt.setInt(3, boardVo.getNo());
 
 					// 실행
 					count = pstmt.executeUpdate();
@@ -278,5 +257,36 @@ public class BoardDao {
 
 				return count;
 			}
+			
+			
+			public int hitUpdate(BoardVo boardVo) {
+				int count = -1;
+				getConnecting();
+				try {
+					// 3. SQL문준비/ 바인딩/ 실행
+					// SQL문준비
+					String query = "";
+					query += " UPDATE board ";
+					query += " SET hit = ? ";
+					query += " where no = ? ";
+					
+					// 바인딩
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, boardVo.getHit());
+					pstmt.setInt(2, boardVo.getNo());
+
+					// 실행
+					count = pstmt.executeUpdate();
+					// 4.결과처리
+
+					System.out.println(count + "건이 변경되었습니다.");
+				} catch (SQLException e) {
+					System.out.println("error:" + e);
+				}
+				close();
+
+				return count;
+			}
+			
 			
 }
