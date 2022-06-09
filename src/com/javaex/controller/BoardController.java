@@ -28,11 +28,17 @@ public class BoardController extends HttpServlet {
 
 			// Dao만들기
 			BoardDao boardDao = new BoardDao();
-			List<BoardVo> bList = boardDao.getList();
-
+//			List<BoardVo> bList = boardDao.getList();
 			// request의 attribute에 bList의 정보를 넣어서 포워딩
-			request.setAttribute("bList", bList);
-
+//			request.setAttribute("bList", bList);
+			
+			String title = request.getParameter("title");
+			List<BoardVo> searchList = boardDao.search(title);
+			
+			// request의 attribute에 bList의 정보를 넣어서 포워딩
+			request.setAttribute("bList", searchList);
+			
+			
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 		} else if ("writeForm".equals(action)) {
 			System.out.println("BoardController > writeForm");

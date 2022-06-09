@@ -87,59 +87,6 @@ public class BoardDao {
 
 			}
 			
-			public List<BoardVo> getList() {
-				List<BoardVo> boardList = new ArrayList<BoardVo>();
-				getConnecting();
-				try {
-
-					// 3. SQL문준비/ 바인딩/ 실행
-					// SQL문준비
-					String query = "";
-					query += " select  board.no ";
-					query += "         ,board.title ";
-					query += "         ,users.name ";
-					query += "         ,board.hit ";
-					query += "         ,board.reg_date ";
-					query += "         ,board.user_no ";
-					query += " from board, users ";
-					query += " where board.user_no = users.no ";
-					query += " order by board.reg_date desc ";
-
-					// 바인딩
-					pstmt = conn.prepareStatement(query);
-					
-					// 실행
-					rs = pstmt.executeQuery();
-
-					// 4.결과처리
-					while (rs.next()) {
-						int no = rs.getInt(1);
-						String title = rs.getString(2);
-						String name = rs.getString(3);
-						int hit = rs.getInt(4);
-						String regDate = rs.getString(5);
-						int userNo = rs.getInt(6);
-						
-						BoardVo boardVo = new BoardVo();
-						
-						boardVo.setNo(no);
-						boardVo.setTitle(title);
-						boardVo.setName(name);
-						boardVo.setHit(hit);
-						boardVo.setRegDate(regDate);
-						boardVo.setUserNo(userNo);
-						
-						boardList.add(boardVo);
-					}
-				} catch (SQLException e) {
-					System.out.println("error:" + e);
-				}
-				close();
-
-				return boardList;
-				
-			}
-			
 			public BoardVo getList(String userTitle) {
 				BoardVo boardVo = null;
 				
@@ -330,7 +277,6 @@ public class BoardDao {
 					
 					// 바인딩
 					pstmt = conn.prepareStatement(query);
-				//	pstmt.setInt(1, boardVo.getHit());
 					pstmt.setInt(1, no);
 
 					// 실행
@@ -344,6 +290,57 @@ public class BoardDao {
 				close();
 
 				return count;
+			}
+			
+			public List<BoardVo> search(String title) {
+				List<BoardVo> searchList = new ArrayList<BoardVo>();
+				getConnecting();
+				try {
+					// 3. SQL문준비/ 바인딩/ 실행
+					// SQL문준비
+					String query = "";
+					query += " select  board.no ";
+					query += "         ,board.title ";
+					query += "         ,users.name ";
+					query += "         ,board.hit ";
+					query += "         ,board.reg_date ";
+					query += "         ,board.user_no ";
+					query += " from board, users ";
+					query += " where board.user_no = users.no ";
+					query += " and board.title like '%'||?||'%' ";
+					query += " order by reg_date desc ";
+					// 바인딩
+					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, title);
+
+					// 실행
+					rs = pstmt.executeQuery();
+					// 4.결과처리
+					while(rs.next()) {
+						int no = rs.getInt(1);
+						String titleSearch = rs.getString(2);
+						String name = rs.getString(3);
+						int hit = rs.getInt(4);
+						String regDate = rs.getString(5);
+						int userNo = rs.getInt(6);
+						
+						BoardVo boardVo = new BoardVo();
+						boardVo.setNo(no);
+						boardVo.setTitle(titleSearch);
+						boardVo.setName(name);
+						boardVo.setHit(hit);
+						boardVo.setRegDate(regDate);
+						boardVo.setUserNo(userNo);
+						
+						searchList.add(boardVo);
+						
+					}
+				} catch (SQLException e) {
+					System.out.println("error:" + e);
+				}
+				close();
+
+				return searchList;
 			}
 			
 			
