@@ -26,36 +26,20 @@ public class BoardController extends HttpServlet {
 		if ("list".equals(action)) {
 			System.out.println("BoardController > list");
 
+			//파라미터 꺼내기
+			String title = request.getParameter("title");
+			
 			// Dao만들기
 			BoardDao boardDao = new BoardDao();
-//			List<BoardVo> bList = boardDao.getList();
-			// request의 attribute에 bList의 정보를 넣어서 포워딩
-//			request.setAttribute("bList", bList);
 			
-			String title = request.getParameter("title");
 			List<BoardVo> searchList = boardDao.search(title);
 			
 			// request의 attribute에 bList의 정보를 넣어서 포워딩
 			request.setAttribute("bList", searchList);
 			
-			
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 		} else if ("writeForm".equals(action)) {
 			System.out.println("BoardController > writeForm");
-
-			// 로그인한 사용자의 no 값을 세션에서 가져오기
-			HttpSession session = request.getSession();
-			UserVo authUser = (UserVo) session.getAttribute("authUser");
-
-			// 파라미터 가져오기
-			int no = authUser.getNo();
-
-			// no으로 사용자 정보 가져오기
-			UserDao userDao = new UserDao();
-			UserVo userVo = userDao.getUser(no);
-
-			// request의 attribute에 userVo의 정보를 넣어서 포워딩
-			request.setAttribute("userVo", userVo);
 
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		} else if ("write".equals(action)) {
@@ -64,14 +48,14 @@ public class BoardController extends HttpServlet {
 			// 파라미터 가져오기
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			int hit = Integer.parseInt(request.getParameter("hit"));
+			//int hit = Integer.parseInt(request.getParameter("hit"));
 			int no = Integer.parseInt(request.getParameter("no"));
 
 			// Vo만들기
 			BoardVo boardVo = new BoardVo();
 			boardVo.setTitle(title);
 			boardVo.setContent(content);
-			boardVo.setHit(hit);
+			//boardVo.setHit(hit); 
 			boardVo.setUserNo(no);
 
 			// Dao만들기
