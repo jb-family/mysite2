@@ -114,11 +114,11 @@ public class BoardController extends HttpServlet {
 			System.out.println("BoardController > modifyForm");
 
 			// 파라미터 가져오기
-			String title = request.getParameter("title");
+			int no = Integer.parseInt(request.getParameter("no"));
 
 			// Dao만들기
 			BoardDao boardDao = new BoardDao();
-			BoardVo bVo = boardDao.getList(title);
+			BoardVo bVo = boardDao.getList(no);
 			
 			// request의 attribute에 bVo의 정보를 넣어서 포워딩
 			request.setAttribute("bVo", bVo);

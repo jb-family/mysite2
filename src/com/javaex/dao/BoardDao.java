@@ -87,62 +87,6 @@ public class BoardDao {
 
 			}
 			
-			public BoardVo getList(String userTitle) {
-				BoardVo boardVo = null;
-				
-				getConnecting();
-				try {
-					// 3. SQL문준비/ 바인딩/ 실행
-					// SQL문준비
-					String query = "";
-					query += " select  board.title ";
-					query += "         ,board.no ";
-					query += "         ,users.name ";
-					query += "         ,board.hit ";
-					query += "         ,board.reg_date ";
-					query += "         ,board.content ";
-					query += "         ,board.user_no ";
-					query += " from board, users ";
-					query += " where board.user_no = users.no ";
-					query += " and     board.title = ? ";
-
-					// 바인딩
-					pstmt = conn.prepareStatement(query);
-					pstmt.setString(1, userTitle);
-					
-					// 실행
-					rs = pstmt.executeQuery();
-
-					// 4.결과처리
-					while (rs.next()) {
-						String title = rs.getString(1);
-						int no = rs.getInt(2);
-						String name = rs.getString(3);
-						int hit = rs.getInt(4);
-						String regDate = rs.getString(5);
-						String content = rs.getString(6);
-						int userNo = rs.getInt(7);
-						
-						boardVo = new BoardVo();
-						
-						boardVo.setNo(no);
-						boardVo.setTitle(title);
-						boardVo.setName(name);
-						boardVo.setHit(hit);
-						boardVo.setRegDate(regDate);
-						boardVo.setContent(content);
-						boardVo.setUserNo(userNo);
-
-					}
-
-				} catch (SQLException e) {
-					System.out.println("error:" + e);
-				}
-				close();
-				
-				return boardVo;
-			}
-			
 			public BoardVo getList(int no) {
 				BoardVo boardVo = null;
 				
