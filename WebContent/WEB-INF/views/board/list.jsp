@@ -81,7 +81,7 @@
 									<tr>
 										<td>${b.no}</td>
 										<td class="text-left">
-										<a href="/mysite2/bcr?action=read&title=${b.title}&hit=${b.hit}">${b.title}</a>
+										<a href="/mysite2/bcr?action=read&no=${b.no}">${b.title}</a>
 										</td>
 										<td>${b.name}</td>
 										<td>${b.hit}</td>

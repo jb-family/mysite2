@@ -196,6 +196,64 @@ public class BoardDao {
 				return boardVo;
 			}
 			
+			public BoardVo getList(int no) {
+				BoardVo boardVo = null;
+				
+				getConnecting();
+				try {
+					// 3. SQL문준비/ 바인딩/ 실행
+					// SQL문준비
+					String query = "";
+					query += " select  board.title ";
+					query += "         ,board.no ";
+					query += "         ,users.name ";
+					query += "         ,board.hit ";
+					query += "         ,board.reg_date ";
+					query += "         ,board.content ";
+					query += "         ,board.user_no ";
+					query += " from board, users ";
+					query += " where board.user_no = users.no ";
+					query += " and     board.no = ? ";
+
+					// 바인딩
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, no);
+					
+					// 실행
+					rs = pstmt.executeQuery();
+
+					// 4.결과처리
+					while (rs.next()) {
+						String title = rs.getString(1);
+						int no1 = rs.getInt(2);
+						String name = rs.getString(3);
+						int hit = rs.getInt(4);
+						String regDate = rs.getString(5);
+						String content = rs.getString(6);
+						int userNo = rs.getInt(7);
+						
+						boardVo = new BoardVo();
+						
+						boardVo.setNo(no1);
+						boardVo.setTitle(title);
+						boardVo.setName(name);
+						boardVo.setHit(hit);
+						boardVo.setRegDate(regDate);
+						boardVo.setContent(content);
+						boardVo.setUserNo(userNo);
+
+					}
+
+				} catch (SQLException e) {
+					System.out.println("error:" + e);
+				}
+				close();
+				
+				return boardVo;
+			}
+			
+			
+			
 			public int delete(BoardVo boardVo) {
 				int count = -1;
 				getConnecting();
@@ -259,7 +317,7 @@ public class BoardDao {
 			}
 			
 			
-			public int hitUpdate(BoardVo boardVo) {
+			public int hitUpdate(int no) {
 				int count = -1;
 				getConnecting();
 				try {
@@ -267,13 +325,13 @@ public class BoardDao {
 					// SQL문준비
 					String query = "";
 					query += " UPDATE board ";
-					query += " SET hit = ? ";
+					query += " SET hit = hit + 1 ";
 					query += " where no = ? ";
 					
 					// 바인딩
 					pstmt = conn.prepareStatement(query);
-					pstmt.setInt(1, boardVo.getHit());
-					pstmt.setInt(2, boardVo.getNo());
+				//	pstmt.setInt(1, boardVo.getHit());
+					pstmt.setInt(1, no);
 
 					// 실행
 					count = pstmt.executeUpdate();
@@ -287,6 +345,7 @@ public class BoardDao {
 
 				return count;
 			}
+			
 			
 			
 }
