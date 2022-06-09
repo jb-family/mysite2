@@ -31,7 +31,6 @@ public class BoardController extends HttpServlet {
 			
 			// Dao만들기
 			BoardDao boardDao = new BoardDao();
-			
 			List<BoardVo> searchList = boardDao.search(title);
 			
 			// request의 attribute에 bList의 정보를 넣어서 포워딩
@@ -48,14 +47,12 @@ public class BoardController extends HttpServlet {
 			// 파라미터 가져오기
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			//int hit = Integer.parseInt(request.getParameter("hit"));
 			int no = Integer.parseInt(request.getParameter("no"));
 
 			// Vo만들기
 			BoardVo boardVo = new BoardVo();
 			boardVo.setTitle(title);
 			boardVo.setContent(content);
-			//boardVo.setHit(hit); 
 			boardVo.setUserNo(no);
 
 			// Dao만들기
