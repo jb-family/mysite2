@@ -22,7 +22,7 @@ public class BoardController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		
+		//test
 		if ("list".equals(action)) {
 			System.out.println("BoardController > list");
 
